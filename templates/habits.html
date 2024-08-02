@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/habits.css">
+    <title>NecoHub Habits</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span class="logo-text">Neco</span><span class="logo-highlight">Hub</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Hábitos</a></li>
+                <li><a href="#">Tarefas</a></li>
+                <li><a href="#">Relatórios</a></li>
+                <li><a href="#">Configurações</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <section class="habit-list">
+                <h2>Meus Hábitos</h2>
+                <ul>
+                    {% if habitos|length == 0 %}
+                        <li>
+                            <span class="habit-name">Sem habitos registrados</span>
+                        </li>
+                    {% else %}
+                        {% for habito in habitos %}
+                            <li>
+                                <span class="habit-name">{{habito.name}}</span>
+                                <button class="mark-done">Concluído</button>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </section>
+            <section class="add-habit">
+                <h2>Adicionar Hábito</h2>
+                <form action="{{ url_for('add_habit') }}" method="post">
+                    <input type="text" name="name" placeholder="Nome do hábito">
+                    <input type="text" name="category" placeholder="Categoria do hábito">
+                    <button type="submit">Adicionar</button>
+                </form>
+            </section>
+        </div>
+        <section class="contribution-chart">
+            <h2>Gráfico de Habitos</h2>
+            <h3>{{ nome_mes }}</h3>
+            <div class="chart-grid">
+                {% for level in levels %}
+                <div class="level-{{ level }}"></div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>
