@@ -1,8 +1,6 @@
 import calendar
 from datetime import datetime
 
-
-
 def obtem_dias_mes_atual():
     ano_atual = datetime.now().year
     mes_atual = datetime.now().month
@@ -14,7 +12,9 @@ def obtem_dias_mes_atual():
     data_info_dict = {
         "dia_atual_formatado" : data_formatada,
         "dias_mes": dias_no_mes,
-        "nome_mes": nome_mes_atual
+        "nome_mes": nome_mes_atual,
+        "ano_atual": ano_atual,
+        "mes_atual": mes_atual
     }
     
     return data_info_dict

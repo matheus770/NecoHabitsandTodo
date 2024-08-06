@@ -176,7 +176,5 @@ section {
     border-radius: 3px;
 }
 
-.chart-grid .level-1 { background-color: #a6c8ff; } /* Azul claro */
-.chart-grid .level-2 { background-color: #78a9ff; } /* Azul médio claro */
-.chart-grid .level-3 { background-color: #4589ff; } /* Azul médio */
-.chart-grid .level-4 { background-color: #0f62fe; } /* Azul escuro */
+.chart-grid .level-0 { background-color: #f14545; } /* Azul claro */
+.chart-grid .level-1 { background-color: #0f62fe; } /* Azul escuro */
