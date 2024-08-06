@@ -33,6 +33,7 @@
                         {% for habito in habitos %}
                             <li>
                                 <span class="habit-name">{{habito.name}}</span>
+                                <input type="date" class="date-input">
                                 <button class="mark-done">Concluído</button>
                             </li>
                         {% endfor %}
@@ -50,10 +51,21 @@
         </div>
         <section class="contribution-chart">
             <h2>Gráfico de Habitos</h2>
+            {% if habitos|length == 0 %}
+                <h2>Sem habitos registrados</h2>
+            {% else %}
+                <select id="chart-options" class="chart-options">
+                {% for habito in habitos %}
+                    <option value="option1">{{habito.name}}</option>
+                {% endfor %}
+                </select>
+            {% endif %}
             <h3>{{ nome_mes }}</h3>
             <div class="chart-grid">
-                {% for level in levels %}
-                <div class="level-{{ level }}"></div>
+                {% for habito in habitos %}
+                    {% for level in habito_levels[habito.id] %}
+                        <div class="level-{{ level }}"></div>
+                    {% endfor %}
                 {% endfor %}
             </div>
         </section>
