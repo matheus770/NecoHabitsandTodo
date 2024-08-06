@@ -33,8 +33,11 @@
                         {% for habito in habitos %}
                             <li>
                                 <span class="habit-name">{{habito.name}}</span>
-                                <input type="date" class="date-input">
-                                <button class="mark-done">Concluído</button>
+                                <form action="{{ url_for('mark_done') }}" method="post" style="display: inline;">
+                                    <input type="hidden" name="habit_id" value="{{ habito.id }}">
+                                    <input type="date" name="date" class="date-input" value="{{ ano_atual }}-{{ mes_atual }}-{{ loop.index }}">
+                                    <button type="submit" class="mark-done">Concluído</button>
+                                </form>
                             </li>
                         {% endfor %}
                     {% endif %}
@@ -54,14 +57,14 @@
             {% if habitos|length == 0 %}
                 <h2>Sem habitos registrados</h2>
             {% else %}
-                <select id="chart-options" class="chart-options">
+                <select id="chart-options" class="chart-options" onchange="updateChart()">
                 {% for habito in habitos %}
-                    <option value="option1">{{habito.name}}</option>
+                    <option value="{{habito.id}}">{{habito.name}}</option>
                 {% endfor %}
                 </select>
             {% endif %}
             <h3>{{ nome_mes }}</h3>
-            <div class="chart-grid">
+            <div id="chart-grid" class="chart-grid">
                 {% for habito in habitos %}
                     {% for level in habito_levels[habito.id] %}
                         <div class="level-{{ level }}"></div>
@@ -70,5 +73,24 @@
             </div>
         </section>
     </main>
+    <script>
+        const habitoLevels = {{ habito_levels|tojson }};
+        
+        function updateChart() {
+            const selectedHabitId = document.getElementById('chart-options').value;
+            const chartGrid = document.getElementById('chart-grid');
+            chartGrid.innerHTML = ''; // Limpa o gráfico atual
+
+            // Adiciona os novos níveis ao gráfico
+            habitoLevels[selectedHabitId].forEach(level => {
+                const div = document.createElement('div');
+                div.className = `level-${level}`;
+                chartGrid.appendChild(div);
+            });
+        }
+
+        // Atualiza o gráfico ao carregar a página pela primeira vez
+        window.onload = updateChart;
+    </script>
 </body>
 </html>
